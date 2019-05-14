@@ -1,5 +1,5 @@
 # To close
-- [pybind/pybind11#1138](https://github.com/pybind/pybind11/issues/1138) - Inconsistent use of holder classes mess. Seems superseded by #1161. Either this or #1161 should get a more detailed review, before categorizing.
+- [pybind/pybind11#1139](https://github.com/pybind/pybind11/issues/1139) - Inconsistent use of holder classes mess. Seems superseded by #1161. Either this or #1161 should get a more detailed review, before categorizing.
 - [pybind/pybind11#1266](https://github.com/pybind/pybind11/issues/1266) - Enables readonly memory views. Two lines change, backwards compatible. No tests. Close in favour of #1466
 - [pybind/pybind11#1286](https://github.com/pybind/pybind11/issues/1286) - Pybind GIL API is incompatible with the raw CPython API because they keep track of python state separately. This is a long and contrieved way of making them play nice. My opinion: close as it is a strange way to make these cooperate. Better solution for those that need CPython API is to have a basic pybind class without the "advance GIL use case".
 - [pybind/pybind11#1322](https://github.com/pybind/pybind11/issues/1322) - Look at #1286
@@ -15,6 +15,7 @@
 - [pybind/pybind11#1255](https://github.com/pybind/pybind11/issues/1255) - Bazel "strict" mode fixes.
 - [pybind/pybind11#1329](https://github.com/pybind/pybind11/issues/1329) - Bugfix for fixed sized numpy dtypes.
 - [pybind/pybind11#1334](https://github.com/pybind/pybind11/issues/1334) - Bugfix for `__int__` and `__hash__` when `py::enum_` has underlying type of `char`.
+- [pybind/pybind11#1524](https://github.com/pybind/pybind11/issues/1524) - `py::arg` in `def_property` results in invalid pointer. This adds a `static_assert` that there are no `py::arg`s in `def_property` statements.
 - [pybind/pybind11#1629](https://github.com/pybind/pybind11/issues/1629) - Typo
 - [pybind/pybind11#1635](https://github.com/pybind/pybind11/issues/1635) - Typos in documntation
 - [pybind/pybind11#1657](https://github.com/pybind/pybind11/issues/1657) - Static analysis found a NULL dereference. If `obj` in this context can never be null, close this PR in favour of [pybind/pybind11#1664](https://github.com/pybind/pybind11/issues/1664).
@@ -37,7 +38,7 @@
 
 # Minor
 - [pybind/pybind11#1043](https://github.com/pybind/pybind11/issues/1043) - Something about propagation of return policies. Removes 4 lines, should be safe, but there's a possibility that tests just don't cover what those 4 lines are doing.
-- [pybind/pybind11#1089](https://github.com/pybind/pybind11/issues/1089) - Cmake C++ standard version settings. Turned into bikeshedding about cmake versions and whether cmake 3.3 is too new (in 2017). Good candidate for merge. 
+- [pybind/pybind11#1089](https://github.com/pybind/pybind11/issues/1089) - Cmake C++ standard version settings. Turned into bikeshedding about cmake versions and whether cmake 3.3 is too new (in 2017). Good candidate for merge.
 - [pybind/pybind11#1101](https://github.com/pybind/pybind11/issues/1101) - Slicing with None. Simple enough, but blocked on repetition of code because `cast()` is not available and @henryiii claims forward declaration to be tricky.
 - [pybind/pybind11#1192](https://github.com/pybind/pybind11/issues/1192) - Allows `std::enable_shared_from_this` to be used for casting and lets pybind avoid a copy in some cases.
 - [pybind/pybind11#1210](https://github.com/pybind/pybind11/issues/1210) - Moves optional and variant casters into their own header. Backwards compatible. Bikeshedding made it go stale. Should be merged as is and the bikeshedding discussion, that could be proven useful, taken to a separate issue.
@@ -46,6 +47,9 @@
 - [pybind/pybind11#1413](https://github.com/pybind/pybind11/issues/1413) - Allow builtins to be used as callbacks
 - [pybind/pybind11#1466](https://github.com/pybind/pybind11/issues/1466) - Similar idea to memory views, but with a greater scope. Adds readonly flag to the buffer protocol. The `py::array` and others (including memory views) would be separate PRs. Looks ready, but should be looked at again.
 - [pybind/pybind11#1496](https://github.com/pybind/pybind11/issues/1496) - `py::bind_vector` can only be extended by another object of the same type, so `string_vector.extend(['asd'])` doesn't work, but `string_vector.extend(StringVector(['asd']))` does. One of the official maintainers called this "an overlooked feature".
+- [pybind/pybind11#1507](https://github.com/pybind/pybind11/issues/1507) - `bool py::callable(py::handle)` wraps the builtin `callable()`.
+- [pybind/pybind11#1513](https://github.com/pybind/pybind11/issues/1513) - `py::dict::get` mirroring `dict.get`, not merged because @jagerman suggested `d["key"].get_with_default("default")` over `d.get("key", "default")`.
+- [pybind/pybind11#1530](https://github.com/pybind/pybind11/issues/1530) - Adds a test for numpy scalar type.
 - [pybind/pybind11#1767](https://github.com/pybind/pybind11/issues/1767) - Adds `__contains__` to `py::bind_map` for better performance. Without it operator `in` falls back to `__iter__`.
 
 
@@ -63,17 +67,19 @@
 - [pybind/pybind11#1368](https://github.com/pybind/pybind11/issues/1368) - Fixes a segfault with iostream wrappers and releasing GIL.
 - [pybind/pybind11#1428](https://github.com/pybind/pybind11/issues/1428) - "Generalize cmake support" was greenlighted by @jakob, but was missing the update to the docs.
 - [pybind/pybind11#1463](https://github.com/pybind/pybind11/issues/1463) - `py::isinstance<py::str>` is too permissive. BUgfix is a WIP.
+- [pybind/pybind11#1581](https://github.com/pybind/pybind11/issues/1581) - Allow `overload_cast_impl` in C++11. Lacks tests and a doc update.
 - [pybind/pybind11#1648](https://github.com/pybind/pybind11/issues/1648) - Minor feature, backwards compatible, but lacks tests.
 - [pybind/pybind11#1651](https://github.com/pybind/pybind11/issues/1651) - Implements py::with according to PEP-343, needs to be rebased, otherwise, ready.
 - [pybind/pybind11#1687](https://github.com/pybind/pybind11/issues/1687) - Makes `py::pythonbuf` contain a `std::unique_ptr<char[]>` instead of `char[1024]` so that users can set their desired buffer size. No tests. Motivation not compeling. In "Unfinished" category because of the lack of tests and the posibility to be proven wrong about the motivation.
 - [pybind/pybind11#1703](https://github.com/pybind/pybind11/issues/1703) - Support for compiling with `-fno-exceptions`. Motivation: Google wants to use pybind11. Unfinished because I left a few comments that were not addressed.
 - [pybind/pybind11#1769](https://github.com/pybind/pybind11/issues/1769) - Interesting use case with two extension modules where one module throws and the other catches the exception. The problem lies in internal/external linkage of some pybind11 types.
+- [pybind/pybind11#1772](https://github.com/pybind/pybind11/issues/1772) - Introduces `std::string` argument overload for `attr()`. Still being discussed.
 
 
 # To review
 - [pybind/pybind11#1098](https://github.com/pybind/pybind11/issues/1098) - Cmake compiler features, by @henryiii. I haven't given it a proper review.
 - [pybind/pybind11#1122](https://github.com/pybind/pybind11/issues/1122) - Construct `py::enum_` from std::string. A simple feature turned into a discussion about case sensitivity. I'm questioning the usefulness of the PR.
-- [pybind/pybind11#1161](https://github.com/pybind/pybind11/issues/1161) - Look at #1138 
+- [pybind/pybind11#1161](https://github.com/pybind/pybind11/issues/1161) - Look at #1139.
 
 # Issue reproducer
 - [pybind/pybind11#1257](https://github.com/pybind/pybind11/issues/1257) - Talks about a specific combination of virtual inheritance and diamond pattern causing a crash on MSVC.
