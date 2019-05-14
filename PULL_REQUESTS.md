@@ -15,7 +15,6 @@
 - pybind/pybind11#1255 - Bazel "strict" mode fixes.
 - pybind/pybind11#1329 - Bugfix for fixed sized numpy dtypes.
 - pybind/pybind11#1334 - Bugfix for `__int__` and `__hash__` when `py::enum_` has underlying type of `char`.
-- pybind/pybind11#1373 - Cmake bugfix. Sets `PythonLibsNew_FOUND` in `tools/FindPythonLibsNew.cmake`
 - pybind/pybind11#1629 - Typo
 - pybind/pybind11#1635 - Typos in documntation
 - pybind/pybind11#1657 - Static analysis found a NULL dereference. If `obj` in this context can never be null, close this PR in favour of pybind/pybind11#1664.
