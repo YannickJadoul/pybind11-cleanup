@@ -29,7 +29,6 @@
 - pybind/pybind11#1678 - Set `-std=c++XY` only for C++ files if CMake is 3.3 or newer.
 - pybind/pybind11#1683 - Another typo, this time in a macro.
 - pybind/pybind11#1709 - Allows `def_readonly` and `def_readwrite` to be used with union types. Could also be considered a minor feature.
-- pybind/pybind11#1715 - Basically a typo. Arguments are passed in the wrong order.
 - pybind/pybind11#1726 - Makes the link to Gitter more visible. Fixes pybind/pybind11#1724.
 - pybind/pybind11#1732 - Makes static member functions, added with `def_static`, `staticmethod` descriptor instances.
 - pybind/pybind11#1734 - Correctly reports exceptions that are set but not thrown during import, this could happen with numpy and cairo libraries. I would really like to have a test for this.
