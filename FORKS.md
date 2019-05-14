@@ -7,21 +7,21 @@ Purpose: Enable `pydrake`, [Drake: Using the Python Bindings](https://drake.mit.
 Additional features (with unittests):
 
 1. Permit `dtype=object` for NumPy
-    * Encompasses PR pybind/pybind11#1152 (more up-to-date version)
+    * Encompasses PR [pybind/pybind11#1152](https://github.com/pybind/pybind11/issues/1152 (more up-to-date version)
 2. Casting to `unique_ptr`
-    * Addresses pybind/pybind11#1132
+    * Addresses [pybind/pybind11#1132](https://github.com/pybind/pybind11/issues/1132
 3. Converting `unique_ptr` to `shared_ptr` via pybind; erroring out for
 incompatible holders
-    * Addresses pybind/pybind11#1138
-        * Encompasses PR pybind/pybind11#1161
+    * Addresses [pybind/pybind11#1138](https://github.com/pybind/pybind11/issues/1138
+        * Encompasses PR [pybind/pybind11#1161](https://github.com/pybind/pybind11/issues/1161
 4. Prevent object slicing for Python subclasses of C++ superclasses.
 Conservatively permit ownership transfer from Python to C++ and back.
     * Addresses:
-        * pybind/pybind11#1145
-        * pybind/pybind11#1333
-        * pybind/pybind11#1389
-        * pybind/pybind11#1546
-        * pybind/pybind11#1774
+        * [pybind/pybind11#1145](https://github.com/pybind/pybind11/issues/1145
+        * [pybind/pybind11#1333](https://github.com/pybind/pybind11/issues/1333
+        * [pybind/pybind11#1389](https://github.com/pybind/pybind11/issues/1389
+        * [pybind/pybind11#1546](https://github.com/pybind/pybind11/issues/1546
+        * [pybind/pybind11#1774](https://github.com/pybind/pybind11/issues/1774
 
 Caveats:
 
