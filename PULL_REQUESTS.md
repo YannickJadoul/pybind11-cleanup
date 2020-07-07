@@ -1,13 +1,7 @@
 # To close
 - [pybind/pybind11#1138](https://github.com/pybind/pybind11/issues/1138) - Inconsistent use of holder classes mess. Seems superseded by #1161. Either this or #1161 should get a more detailed review, before categorizing.
-- [pybind/pybind11#1266](https://github.com/pybind/pybind11/issues/1266) - Enables readonly memory views. Two lines change, backwards compatible. No tests. Close in favour of #1466
 - [pybind/pybind11#1286](https://github.com/pybind/pybind11/issues/1286) - Pybind GIL API is incompatible with the raw CPython API because they keep track of python state separately. This is a long and contrieved way of making them play nice. My opinion: close as it is a strange way to make these cooperate. Better solution for those that need CPython API is to have a basic pybind class without the "advance GIL use case".
 - [pybind/pybind11#1322](https://github.com/pybind/pybind11/issues/1322) - Look at #1286
-- [pybind/pybind11#1447](https://github.com/pybind/pybind11/issues/1447) - Workaround for PGI compiler bug. Bug is fixed on PGI version 18.7. Latest version is 18.10.
-- [pybind/pybind11#1494](https://github.com/pybind/pybind11/issues/1494) - Dynamic attribute support on Pypy 6, breaks the tests and doesn't seem to work. The only thing indicating that it works is the PR author's word.
-- [pybind/pybind11#1633](https://github.com/pybind/pybind11/issues/1633) - Wrong.
-- [pybind/pybind11#1720](https://github.com/pybind/pybind11/issues/1720) - Tests PyPy 3.6 on Travis. Never really worked. Seems abandoned.
-- [pybind/pybind11#1746](https://github.com/pybind/pybind11/issues/1746) - Adds the ability to set `__version__`, `__author__` and `__license__`. Review comment not answered, close as abandoned. Users who really want this can always do this with `module.attr("__version__") = "1.2.3"`. On the other hand, merging this PR makes pybind11 modules larger for all users.
 
 
 # Fixes
